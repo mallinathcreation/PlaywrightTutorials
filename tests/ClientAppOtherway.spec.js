@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 
 
 
-test('Client App Login Other Way', async ({ page }) => {
+test.only('Client App Login Other Way', async ({ page }) => {
 
     const email = "mbasu@gmail.com"
     const products = page.locator(".card-body");
@@ -23,14 +23,12 @@ test('Client App Login Other Way', async ({ page }) => {
     await page.locator("div li").first().waitFor();
     await expect(page.getByText(productName)).toBeVisible();
     await page.getByRole("button",{name: 'Checkout'}).click();
-    
     await page.getByPlaceholder("Select Country").pressSequentially("ind");
     await page.getByRole("button",{name:'India'}).nth(1).click();
     await page.getByText("PLACE ORDER").click();
     await expect(page.getByText("Thankyou for the order.")).toBeVisible();
     const orderID = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
-    console.log(orderID);
-    await page.locator("li [routerlink*='myorders']").click();
+    await page.getByRole("listitem").getByRole("button",{name: 'ORDERS'}).click();
     await page.locator(".table").waitFor();
     const rows = await page.locator("tbody tr");
 
@@ -41,7 +39,6 @@ test('Client App Login Other Way', async ({ page }) => {
             break;
         }
     }
-
     const orderIdDetails = await page.locator(".col-text").textContent();
     expect(orderID.includes(orderIdDetails)).toBeTruthy();
 
