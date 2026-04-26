@@ -3,89 +3,119 @@ const { test, expect } = require('@playwright/test');
 const email = "mb@gmail.com";
 const password = "Mbasu@123";
 const BASE_URL = "https://eventhub.rahulshettyacademy.com";
-const eventTitle = 'Test Event ${Date.now()}';
-let bookingRef = '';
-let seatBeforeBooking = "";
-let seatAfterBooking = "";
+const eventTitle = `Test Event ${Date.now()}`;
+
 
 async function login(page){
 
     await page.goto(BASE_URL);
-     await page.getByPlaceholder("you@email.com").fill(email);
+    await page.getByPlaceholder("you@email.com").fill(email);
     await page.getByLabel("Password").fill(password);
     await page.locator("#login-btn").click();
     await expect(page.getByRole("link",{name: 'Browse Events →'})).toBeVisible();
 
 }
 
-async function
+function futureDateValue() {
 
+const date = new Date();
 
+date.setDate(date.getDate() + 3);
 
-test('New Event Creation', async ({ page }) => {
+return date.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
+}
 
-    await login(page);
-    await page.goto(`${BASE_URL}/admin/events`);
-    await page.locator("#event-title-input").fill(eventTitle);
-    await page.locator("#admin-event-form textarea").fill("This is a test event created by Playwright automation.");
-    await page.getByLabel("City").fill("Kolkata");
-    await page.getByLabel("Venue").fill("New Town");
-    await page.getByLabel("Event Date & Time").fill("2027-12-31T10:00");
-    await page.getByLabel("Price ($)").fill("100");
-    await page.getByLabel("Total Seats").fill("50");
-    await page.locator('#add-event-btn').click();
-    await expect(page.getByText("Event created!")).toBeVisible();
-});
+test('Full Booking Flow with Event Creation', async ({ page }) => {
 
-test('Find the event card and capture seats', async ({ page }) => {
+// --------------------------------------------------
 
-    await login(page);
-    await page.goto(`${BASE_URL}/events`); 
-    const eventCards =  page.getByTestId("event-card");
-    await expect(eventCards.first()).toBeVisible();
-    const targetEventCard = eventCards.filter({ hasText: eventTitle });
-    await expect(targetEventCard).toBeVisible({ timeout: 5000 });
-    seatBeforeBooking = parseInt(await targetEventCard.getByText("seat").first().innerText()[0]);
-    console.log(seatBeforeBooking);
+// Step 1 — Login
 
-    //Booking the event
-    await targetEventCard.getByTestId("book-now-btn").click();
-    const ticketCount = page.locator('#ticket-count');
-    await expect(ticketCount).toHaveText('1');
-    await page.getByLabel("Full Name").fill("Mallinath");
-    await page.locator("#customer-email").fill("test.student@example.com");
-    await page.getByPlaceholder('+91 98765 43210').fill('9876543210');
-    await page.locator('.confirm-booking-btn').click();
-    const bookingRefEl  = await page.locator(".booking-ref").first();
-    await expect(bookingRefEl).toBeVisible();
-    bookingRef = (await bookingRefEl.innerText()).trim();
-    expect(bookingRef.charAt(0)).toBe(eventTitle.trim().charAt(0).toUpperCase());
-    await page.getByRole("link",{name:'View My Bookings'}).click();
-    await expect(page).toHaveURL(`${BASE_URL}/bookings`);
+// --------------------------------------------------
 
-});
+await login(page);
+// --------------------------------------------------
 
-test('Verify in My Bookings', async ({ page }) => {
+// Step 2 — Create a new event
 
-    await login(page);
-    await page.goto(`${BASE_URL}/bookings`);
-    const bokingCards = page.getByTestId("booking-card");
-    await expect(bokingCards.first()).toBeVisible();
-    const matchingCard = bokingCards.filter({ has: page.locator('.booking-ref', { hasText: `${bookingRef}`})});
-    await expect(matchingCard).toBeVisible();
-    await expect(matchingCard).toContainText(eventTitle);
+// --------------------------------------------------
+const eventTitle = `Test Event ${Date.now()}`;
+await page.goto(`${BASE_URL}/admin/events`);
+await page.locator('#event-title-input').fill(eventTitle);
+await page.locator('#admin-event-form textarea').fill('Automation test event description');
+await page.getByLabel('City').fill('Bangalore');
+await page.getByLabel('Venue').fill('Test Auditorium');
+await page.getByLabel('Event Date & Time').fill(futureDateValue());
+await page.getByLabel('Price ($)').fill('100');
+await page.getByLabel('Total Seats').fill('50');
+await page.locator('#add-event-btn').click();
+await expect(page.getByText('Event created!')).toBeVisible();
+// --------------------------------------------------
 
-});
+// Step 3 — Find event card & capture seats
 
-test('Verify Seat Reduction', async ({ page }) => {
+// --------------------------------------------------
 
-    await login(page);
-    await page.goto(`${BASE_URL}/events`);
-    const eventCards =  page.getByTestId("event-card");
-    await expect(eventCards.first()).toBeVisible();
-    const targetEventCard = eventCards.filter({ hasText: eventTitle });
-    await expect(targetEventCard).toBeVisible({ timeout: 5000 });
-    seatAfterBooking = parseInt(await targetEventCard.getByText("seat").first().innerText()[0]);
-    console.log(seatAfterBooking);
-    expect(seatAfterBooking).toBe(seatBeforeBooking - 1);
+await page.goto(`${BASE_URL}/events`);
+const eventCards = page.getByTestId('event-card');
+await expect(eventCards.first()).toBeVisible();
+const matchedCard = eventCards.filter({ hasText: eventTitle });
+await expect(matchedCard).toBeVisible({ timeout: 5000 });
+const seatsTextBefore = await matchedCard.locator('text=/seat/i').innerText();
+const seatsBeforeBooking = parseInt(seatsTextBefore.match(/\d+/)[0]);
+// --------------------------------------------------
+
+// Step 4 — Start booking
+
+// --------------------------------------------------
+
+await matchedCard.getByTestId('book-now-btn').click();
+// --------------------------------------------------
+
+// Step 5 — Fill booking form
+
+// --------------------------------------------------
+
+await expect(page.locator('#ticket-count')).toHaveText('1');
+await page.getByLabel('Full Name').fill('Playwright User');
+await page.locator('#customer-email').fill('bookinguser@mail.com');
+await page.getByPlaceholder('+91 98765 43210').fill('9876543210');
+await page.locator('.confirm-booking-btn').click();
+// --------------------------------------------------
+
+// Step 6 — Verify booking confirmation
+
+// --------------------------------------------------
+
+const bookingRefElement = page.locator('.booking-ref').first();
+await expect(bookingRefElement).toBeVisible();
+const bookingRef = (await bookingRefElement.innerText()).trim();
+// --------------------------------------------------
+
+// Step 7 — Verify in My Bookings
+
+// --------------------------------------------------
+
+await page.getByText('View My Bookings').click();
+await expect(page).toHaveURL(`${BASE_URL}/bookings`);
+const bookingCards = page.locator('#booking-card');
+await expect(bookingCards.first()).toBeVisible();
+const matchedBooking = bookingCards.filter({has: page.locator('.booking-ref', { hasText: bookingRef }),});
+await expect(matchedBooking).toBeVisible();
+await expect(matchedBooking).toContainText(eventTitle);
+// --------------------------------------------------
+
+// Step 8 — Verify seat reduction
+
+// --------------------------------------------------
+
+await page.goto(`${BASE_URL}/events`);
+await expect(eventCards.first()).toBeVisible();
+const updatedCard = eventCards.filter({ hasText: eventTitle });
+await expect(updatedCard).toBeVisible();
+const seatsTextAfter = await updatedCard.locator('text=/seat/i').innerText();
+const seatsAfterBooking = parseInt(seatsTextAfter.match(/\d+/)[0]);
+expect(seatsAfterBooking).toBe(seatsBeforeBooking - 1);
+console.log(`Seats before booking: ${seatsBeforeBooking}, Seats after booking: ${seatsAfterBooking}`);
+
 });
