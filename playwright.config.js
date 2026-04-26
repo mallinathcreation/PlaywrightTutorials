@@ -6,15 +6,17 @@ import { defineConfig, devices } from '@playwright/test';
  */
 const config = ({
   testDir: './tests',
-  timeout: 40 * 1000,
+  timeout: 50 * 1000,
   expect: {
-    timeout: 40 * 1000,
+    timeout: 50 * 1000,
   },
    reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     browserName: 'chromium',
     headless: false,
+    screenshot :"only-on-failure",
+    trace :"retain-on-failure",
     
   },
 

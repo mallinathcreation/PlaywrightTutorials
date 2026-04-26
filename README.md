@@ -9,3 +9,5 @@ To Run Playwright test via playwright runner --> npx playwright test <filename.s
 
 To Generate Script using record and play using codegen -->
 npx playwright codegen <url>
+
+To upload the traces - > trace.playwright.dev --> upload the zip file
