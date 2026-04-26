@@ -62,6 +62,8 @@ await expect(eventCards.first()).toBeVisible();
 const matchedCard = eventCards.filter({ hasText: eventTitle });
 await expect(matchedCard).toBeVisible({ timeout: 5000 });
 const seatsTextBefore = await matchedCard.locator('text=/seat/i').innerText();
+///\d+/ matches one or more consecutive digits
+//.match() returns an array of all matches found
 const seatsBeforeBooking = parseInt(seatsTextBefore.match(/\d+/)[0]);
 // --------------------------------------------------
 
