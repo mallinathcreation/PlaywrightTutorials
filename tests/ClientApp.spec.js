@@ -46,9 +46,9 @@ test('Client App Login', async ({ page }) => {
         }
     }
 
-    expect(await page.locator(".mt-5 [type='text']").first()).toHaveText(email);
+    await expect(await page.locator(".mt-5 [type='text']").first()).toHaveText(email);
     await page.locator(".action__submit").click();
-    expect(await page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
+    await expect(await page.locator(".hero-primary")).toHaveText("THANKYOU FOR THE ORDER.");
     const orderID = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
     console.log(orderID);
     await page.locator("li [routerlink*='myorders']").click();
@@ -64,6 +64,6 @@ test('Client App Login', async ({ page }) => {
     }
 
     const orderIdDetails = await page.locator(".col-text").textContent();
-    expect(orderID.includes(orderIdDetails)).toBeTruthy();
+    await expect(orderID.includes(orderIdDetails)).toBeTruthy();
 
 });
