@@ -11,7 +11,19 @@ test("Popup Validations", async ({ page }) => {
     await expect(page.locator("#displayed-text")).toBeVisible();
     await page.locator("#hide-textbox").click();
     await expect(page.locator("#displayed-text")).toBeHidden();
+    await page.locator("#confirmbtn").click();
 
+    //to handle java script alerts .In playwright it is called dialogs.
+    page.on("dialog",dialog=>dialog.accept()); //to accept the alert
+    // page.on("dialog",dialog=>dialog.dismiss()); // to dismiss the alert
 
+    //to hover on element
+    await page.locator("#mousehover").hover();
+
+    //handle frames
+    const framespage = page.frameLocator("#courses-iframe");
+    await framespage.locator("li a[href='lifetime-access']:visible").click();
+    const text = await framespage.locator("div.text h2").textContent();
+    console.log(text.split(" ")[1].trim());
 
 });
