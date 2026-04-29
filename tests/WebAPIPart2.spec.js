@@ -1,26 +1,31 @@
 const { test, expect } = require('@playwright/test');
 
-test.beforeAll(async ({browser}) => {
+let webcontext;
 
-    const context = await browser.context();
+test.beforeAll(async ({ browser }) => {
+
+    const context = await browser.newContext();
     const page = await context.newPage();
     await page.goto('https://rahulshettyacademy.com/client/');
-    await page.locator("#userEmail").fill(email);
+    await page.locator("#userEmail").fill("mbasu@gmail.com");
     await page.locator("#userPassword").type("Mbasu@123");
     await page.locator("#login").click();
     await page.waitForLoadState('networkidle');
 
     //to get the storage state from browser 
-    const storageState = await context.storageState();
+    await context.storageState({ path: 'state.json' });
+    //in the noew browser we are passing the storage state which got created.
+    webcontext = await browser.newContext({ storageState: 'state.json' });
 
 });
 
-test('Client App Login', async ({ page }) => {
+test('Client App Login', async () => {
 
-    const email = "mbasu@gmail.com"
-    const products = page.locator(".card-body");
+    const email = "mbasu@gmail.com";
     const productName = "ZARA COAT 3";
-    
+    const page = await webcontext.newPage();
+    await page.goto('https://rahulshettyacademy.com/client/');
+    const products = page.locator(".card-body");
     await page.locator(".card-body b").first().waitFor();
     const title = await page.locator(".card-body b").allTextContents();
     // console.log(title);
@@ -55,7 +60,7 @@ test('Client App Login', async ({ page }) => {
         }
     }
 
-    await expect(await page.locator(".mt-5 [type='text']").first()).toHaveText(email);
+    await expect(await page.locator(".mt-5 [type='text']").first()).toHaveText("mbasu@gmail.com");
     await page.locator(".action__submit").click();
     await expect(await page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
     const orderID = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
@@ -64,9 +69,9 @@ test('Client App Login', async ({ page }) => {
     await page.locator(".table").waitFor();
     const rows = await page.locator("tbody tr");
 
-    for(let i=0; i< await rows.count(); i++){
+    for (let i = 0; i < await rows.count(); i++) {
         const rowOrderID = await rows.nth(i).locator("th").textContent();
-        if(orderID.includes(rowOrderID)){
+        if (orderID.includes(rowOrderID)) {
             await rows.nth(i).locator("button").first().click();
             break;
         }
@@ -75,4 +80,16 @@ test('Client App Login', async ({ page }) => {
     const orderIdDetails = await page.locator(".col-text").textContent();
     await expect(orderID.includes(orderIdDetails)).toBeTruthy();
 
+});
+
+test('Test Case 2 ', async () => {
+
+    const email = ""
+    const productName = "ZARA COAT 3";
+    const page = await webcontext.newPage();
+    await page.goto('https://rahulshettyacademy.com/client/');
+    const products = page.locator(".card-body");
+    await page.locator(".card-body b").first().waitFor();
+    const title = await page.locator(".card-body b").allTextContents();
+    console.log(title);
 });
