@@ -25,7 +25,7 @@ test("Security Test Intercept", async ({ page }) => {
     );
     //css using text.
     await page.locator("button:has-text('View')").first().click();
-    await page.pause();
+    await expect (page.locator("p").last()).toHaveText("You are not authorize to view this order");
 
 
 });
