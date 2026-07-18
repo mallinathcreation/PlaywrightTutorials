@@ -59,7 +59,7 @@ test('Browser Context Playwright test',async ({browser}) => {
 
 });
 
-test('UI Controls',async ({page}) => {
+test('@web UI Controls',async ({page}) => {
     
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
     const dropdown = page.locator('select.form-control');

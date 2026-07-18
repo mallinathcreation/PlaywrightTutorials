@@ -1,5 +1,5 @@
 const { test, expect, request } = require('@playwright/test');
-const {APIUtils} = require('./Utils/APIUtils');
+const {APIUtils} = require('../Utils/APIUtils');
 
 const loginPayload = { userEmail: 'mbasu@gmail.com', userPassword: 'Mbasu@123' };
 let response;
@@ -23,7 +23,7 @@ test.beforeAll(async () => {
 //before each test case this will execute
 // test.beforeEach(async () => {});
 
-test('Place the Order', async ({ page }) => {
+test('@api Place the Order', async ({ page }) => {
     
   //to set the token in local storage we have to use addInitScript() method.
   // It will set the token in local storage before the page is loaded.

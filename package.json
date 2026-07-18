@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "test": "npx playwright test tests/WebAPIPart1.spec.js --headed"
+    "regression": "npx playwright test",
+    "webTest": "npx playwright test --grep @web",
+    "apiTest": "npx playwright test --grep @api"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +14,8 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "@types/node": "^25.6.0"
+    "@types/node": "^25.6.0",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.2"
   }
 }

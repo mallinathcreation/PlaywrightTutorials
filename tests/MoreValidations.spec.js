@@ -67,7 +67,7 @@ test("Screenshot and Visual Comparision", async ({ page }) => {
 //Now every day we will take screenshot and then it will compare with screenshot of
 //yesterday to today it will compare.
 
-test.only("Visual Comparision", async ({ page }) => {
+test("Visual Comparision", async ({ page }) => {
 
     await page.goto("https://www.flightaware.com/");
     await expect(await page.screenshot()).toMatchSnapshot("landing.png");

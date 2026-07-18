@@ -4,7 +4,7 @@ const { POManager } = require('../pageobjects/POManager');
 const dataSet = JSON.parse(JSON.stringify(require("../utils/PlaceOrderTestData.json")));
 
 for(const data of dataSet){
-test(`Client App Login for ${data.productName}`, async ({ page }) => {
+test(`@web Client App Login for ${data.productName}`, async ({ page }) => {
 
     const poManager = new POManager(page);
     const email = data.username;
@@ -36,7 +36,7 @@ test(`Client App Login for ${data.productName}`, async ({ page }) => {
 });
 }
 
-customtest.only('Client App Login', async ({ page , testDataForOrder}) => {
+customtest('Client App Login', async ({ page , testDataForOrder}) => {
 
     const poManager = new POManager(page);
     const email = testDataForOrder.username;

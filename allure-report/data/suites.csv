@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","9481","@web Client App Login for ADIDAS ORIGINAL","","2026-07-18","passed","2026-07-18","","ClientAppPO.spec.js","",""
+"","51996","@web Client App Login for ZARA COAT 3","","2026-07-18","broken","2026-07-18","","ClientAppPO.spec.js","",""
+"","9972","@web UI Controls","","2026-07-18","passed","2026-07-18","","UIBasicstest.spec.js","",""
