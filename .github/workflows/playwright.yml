@@ -27,7 +27,6 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
-      continue-on-error: true
     - name: Generate Dashboard JSON
       if: always()
       run: node scripts/generateDashboard.js
@@ -43,3 +42,14 @@ jobs:
       with:
           name: dashboard
           path: dashboard/
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+
+    - name: Upload Pages Artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: dashboard
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
