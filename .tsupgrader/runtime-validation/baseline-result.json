@@ -1,0 +1,38 @@
+{
+  "planHash": "2af1adf77ee5996906eb97d561b326db8d16917d77d13a5333745dcf4a786fe0",
+  "phase": "baseline",
+  "recordedAtUtc": "2026-07-25T18:07:24.4981079Z",
+  "retryCount": 0,
+  "resetBaseline": false,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 3595,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "npm-install-succeeds",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\nup to date, audited 13 packages in 2s\r\n\r\nfound 0 vulnerabilities\r\n",
+        "durationMs": 3063
+      },
+      {
+        "name": "playwright-list-tests",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "Listing tests:\r\n  ClientAppPO_ts.spec.ts:9:9 \u203A @web Client App Login for ZARA COAT 3\r\n  ClientAppPO_ts.spec.ts:9:9 \u203A @web Client App Login for ADIDAS ORIGINAL\r\n  ClientAppPO.spec.js:7:1 \u203A @web Client App Login for ZARA COAT 3\r\n  ClientAppPO.spec.js:7:1 \u203A @web Client App Login for ADIDAS ORIGINAL\r\n  UIBasicstest.spec.js:62:1 \u203A @web UI Controls\r\nTotal: 5 tests in 3 files\r\n",
+        "durationMs": 6961
+      }
+    ]
+  }
+}

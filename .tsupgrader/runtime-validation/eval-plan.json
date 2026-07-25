@@ -1,0 +1,30 @@
+{
+  "name": "playwrightautomation-runtime-validation",
+  "projectType": "library",
+  "setup": [
+    {
+      "command": "npm",
+      "args": ["install"]
+    }
+  ],
+  "assertions": [
+    {
+      "name": "npm-install-succeeds",
+      "kind": "process",
+      "command": "npm",
+      "args": ["install"],
+      "verificationMethod": "exit-code",
+      "expected": "0",
+      "timeoutSeconds": 600
+    },
+    {
+      "name": "playwright-list-tests",
+      "kind": "process",
+      "command": "npx",
+      "args": ["playwright", "test", "--grep", "@web", "--list"],
+      "verificationMethod": "exit-code",
+      "expected": "0",
+      "timeoutSeconds": 300
+    }
+  ]
+}
