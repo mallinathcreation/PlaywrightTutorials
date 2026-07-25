@@ -10,7 +10,10 @@ const config = ({
   expect: {
     timeout: 50 * 1000,
   },
-   reporter: 'html',
+   reporter: [
+  ['html'],
+  ['json', { outputFile: 'playwright-report/results.json' }]
+],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     browserName: 'chromium',

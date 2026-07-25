@@ -1,0 +1,9 @@
+{
+  "status": "FAILED",
+  "passed": 25,
+  "failed": 6,
+  "skipped": 0,
+  "duration": "307.45 sec",
+  "branch": "local",
+  "run": "Local"
+}
