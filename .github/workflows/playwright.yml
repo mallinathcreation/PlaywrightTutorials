@@ -1,11 +1,12 @@
 name: Playwright Tests
+
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight
+    - cron: '0 0 * * *'
   push:
-    branches: [ main]
+    branches: [main]
   pull_request:
-    branches: [ main]
+    branches: [main]
 
 permissions:
   contents: write
@@ -17,43 +18,58 @@ jobs:
     timeout-minutes: 60
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-        cache: 'npm'
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install
-    - name: Run Playwright tests
-      run: npx playwright test
-    - name: Generate Dashboard JSON
-      if: always()
-      run: node scripts/generateDashboard.js
-    - uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 10
-    - name: Upload Dashboard
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install
+      - name: Run Playwright Tests
+        run: npx playwright test
+      - name: Generate Allure Report
+        if: always()
+        run: npx allure generate allure-results --clean -o allure-report
+      - name: Generate Dashboard JSON
+        if: always()
+        run: node scripts/generateDashboard.js
+      - name: Prepare GitHub Pages
+        if: always()
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force site
+          Copy-Item dashboard\* site\ -Recurse -Force
+          Copy-Item playwright-report site\playwright-report -Recurse -Force
+          Copy-Item allure-report site\allure-report -Recurse -Force
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+      - name: Upload Allure Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+      - name: Upload Dashboard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
           name: dashboard
           path: dashboard/
-    - name: Setup Pages
-      if: always()  
-      uses: actions/configure-pages@v5
-
-    - name: Upload Pages Artifact
-      if: always()
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: dashboard
-
-    - name: Deploy to GitHub Pages
-      if: always()
-      id: deployment
-      uses: actions/deploy-pages@v4
+      - name: Setup Pages
+        if: always()
+        uses: actions/configure-pages@v5
+      - name: Upload Pages Artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Deploy to GitHub Pages
+        if: always()
+        id: deployment
+        uses: actions/deploy-pages@v4

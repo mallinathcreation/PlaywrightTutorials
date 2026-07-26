@@ -1,52 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Playwright Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playwright Automation Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
+    <!-- ================= HEADER ================= -->
+    <header class="hero">
+        <h1>
+            <i class="fa-solid fa-rocket"></i>
+            Playwright Automation Dashboard
+        </h1>
+        <p>
+            Modern QA Automation Dashboard • Playwright • GitHub Actions • CI/CD
+        </p>
+        <div class="hero-line"></div>
+    </header>
 
-<h1>🚀 Playwright Automation Dashboard</h1>
+    <!-- ================= DASHBOARD ================= -->
 
-<div class="card">
-    <h2>Status</h2>
-    <h3 id="status">Loading...</h3>
-</div>
+    <main class="dashboard">
+        <!-- Status -->
+        <div class="card status-card">
+            <i class="fa-solid fa-circle-info"></i>
+            <h3>Status</h3>
+            <h2 id="status">Loading...</h2>
+        </div>
 
-<div class="card">
-    <h2>Passed</h2>
-    <h3 id="passed">0</h3>
-</div>
+        <!-- Passed -->
 
-<div class="card">
-    <h2>Failed</h2>
-    <h3 id="failed">0</h3>
-</div>
+        <div class="card pass-card">
+            <i class="fa-solid fa-circle-check"></i>
+            <h3>Passed</h3>
+            <h2 id="passed">0</h2>
+        </div>
 
-<div class="card">
-    <h2>Skipped</h2>
-    <h3 id="skipped">0</h3>
-</div>
+        <!-- Failed -->
 
-<div class="card">
-    <h2>Duration</h2>
-    <h3 id="duration">Loading...</h3>
-</div>
+        <div class="card fail-card">
+            <i class="fa-solid fa-circle-xmark"></i>
+            <h3>Failed</h3>
+            <h2 id="failed">0</h2>
 
-<div class="card">
-    <h2>Branch</h2>
-    <h3 id="branch">Loading...</h3>
-</div>
+        </div>
+        <!-- Skipped -->
+        <div class="card skip-card">
+            <i class="fa-solid fa-forward"></i>
+            <h3>Skipped</h3>
+            <h2 id="skipped">0</h2>
+        </div>
 
-<div class="card">
-    <h2>Run</h2>
-    <h3 id="run">Loading...</h3>
-</div>
+        <!-- Duration -->
 
-<script src="app.js"></script>
+        <div class="card">
+            <i class="fa-solid fa-stopwatch"></i>
+            <h3>Duration</h3>
+            <h2 id="duration">Loading...</h2>
+        </div>
 
+        <!-- Branch -->
+
+        <div class="card">
+            <i class="fa-solid fa-code-branch"></i>
+            <h3>Branch</h3>
+            <h2 id="branch">Loading...</h2>
+        </div>
+
+        <!-- Run -->
+
+        <div class="card">
+            <i class="fa-solid fa-hashtag"></i>
+            <h3>Run</h3>
+            <h2 id="run">Loading...</h2>
+        </div>
+
+        <!-- Success Rate -->
+
+        <div class="card progress-card">
+            <h3>Success Rate</h3>
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <h2 id="successRate">0%</h2>
+            <p id="summary">Loading...</p>
+        </div>
+
+    </main>
+
+    <!-- ================= BUTTONS ================= -->
+
+    <section class="buttons">
+        <!-- Playwright HTML Report -->
+        <a href="./playwright-report/index.html" class="btn" target="_blank">
+            <i class="fa-solid fa-file-lines"></i>
+            HTML Report
+        </a>
+        <!-- GitHub Actions -->
+        <a href="https://github.com/mallinathcreation/PlaywrightTutorials/actions" target="_blank" class="btn">
+            <i class="fa-brands fa-github"></i>
+            GitHub Actions
+
+        </a>
+        <!-- Repository -->
+        <a href="https://github.com/mallinathcreation/PlaywrightTutorials" target="_blank" class="btn">
+            <i class="fa-brands fa-github"></i>
+            Repository
+        </a>
+
+        <!-- Allure Report -->
+        <a href="./allure-report/index.html" class="btn" target="_blank">
+            <i class="fa-solid fa-chart-column"></i>
+            Allure Report
+        </a>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+        <p>
+            Built with ❤️ using
+            <strong>Playwright</strong> &
+            <strong>GitHub Actions</strong>
+        </p>
+        <br>
+        <p>
+            © 2026 Mallinath Basu
+        </p>
+
+    </footer>
+    <script src="app.js"></script>
 </body>
 
 </html>
