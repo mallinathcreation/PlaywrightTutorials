@@ -44,13 +44,16 @@ jobs:
           name: dashboard
           path: dashboard/
     - name: Setup Pages
+      if: always()  
       uses: actions/configure-pages@v5
 
     - name: Upload Pages Artifact
+      if: always()
       uses: actions/upload-pages-artifact@v3
       with:
         path: dashboard
 
     - name: Deploy to GitHub Pages
+      if: always()
       id: deployment
       uses: actions/deploy-pages@v4
