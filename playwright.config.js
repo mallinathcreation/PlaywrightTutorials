@@ -17,7 +17,7 @@ const config = ({
     ['list'],
     ['html', { open: 'never' }],
     ['json', { outputFile: 'playwright-report/results.json' }],
-    ['junit', { outputFile: 'results.xml' }]
+    ['junit', { outputFile: 'results.xml' }],
     ['allure-playwright']
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
