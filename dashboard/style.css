@@ -195,6 +195,12 @@ body {
     background: #1d4ed8;
 }
 
+.btn.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    background: #475569;
+}
+
 .btn i {
     margin-right: 8px;
 }

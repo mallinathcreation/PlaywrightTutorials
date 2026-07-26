@@ -16,6 +16,18 @@ fetch("results.json")
         document.getElementById("branch").textContent = data.branch;
         document.getElementById("run").textContent = "#" + data.run;
 
+        const cucumberBtn = document.getElementById("cucumberReportBtn");
+
+        if (data.cucumberReport) {
+            cucumberBtn.href = data.cucumberReportPath;
+            cucumberBtn.classList.remove("disabled");
+            cucumberBtn.title = "Open the Cucumber HTML report";
+        } else {
+            cucumberBtn.href = "#";
+            cucumberBtn.classList.add("disabled");
+            cucumberBtn.title = "Cucumber HTML report not generated yet";
+        }
+
         // Success Rate
 
         const total =

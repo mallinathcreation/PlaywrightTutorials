@@ -5,5 +5,7 @@
   "skipped": 0,
   "duration": "307.45 sec",
   "branch": "local",
-  "run": "Local"
+  "run": "Local",
+  "cucumberReport": false,
+  "cucumberReportPath": null
 }

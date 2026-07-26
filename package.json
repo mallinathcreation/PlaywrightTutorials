@@ -7,7 +7,8 @@
     "regression": "npx playwright test",
     "allureReportTest": "npx playwright test --reporter=line,allure-playwright",
     "webTest": "npx playwright test --grep @web",
-    "apiTest": "npx playwright test --grep @api"
+    "apiTest": "npx playwright test --grep @api",
+    "cucumberRegression": "npx cucumber-js --parallel 2 --retry 1 --format html:cucumber-report.html"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,8 @@
     "@types/node": "^25.6.0",
     "allure-commandline": "^2.43.0",
     "allure-playwright": "^3.10.2"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^13.2.0"
   }
 }
