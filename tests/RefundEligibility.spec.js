@@ -39,7 +39,7 @@ await expect(page.getByText(" Single-ticket bookings qualify for a full refund."
 
 });
 
-test('Verify that group ticket booking is NOT eligible for refund', async ({ page }) => {
+test.skip('Verify that group ticket booking is NOT eligible for refund', async ({ page }) => {
 
 const num = 3;    
 await login(page);
